@@ -17,7 +17,7 @@ export function GoalsTitle({ currentGoalTimeframe }: { currentGoalTimeframe: str
   const { classes } = useStyles();
   return (
     <Title className={classes.title} align="center">
-      Goals for my {' '}
+      Goals for my{' '}
       <Text inherit variant="gradient" component="span">
         {currentGoalTimeframe}
       </Text>

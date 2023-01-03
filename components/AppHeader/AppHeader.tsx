@@ -216,9 +216,9 @@ export function AppHeader() {
                 </div>
               </HoverCard.Dropdown>
             </HoverCard> */}
-            <a href="/download" className={classes.link}>
-              Download
-            </a>
+            <Link href="/download">
+              <a className={classes.link}>Download</a>
+            </Link>
           </Group>
 
           <Group className={classes.hiddenMobile}>

@@ -18,7 +18,10 @@ export default function Goals() {
   return (
     <MantineProvider
       inherit
-      theme={{ defaultGradient: { from: 'red', to: 'orange', deg: 45 }, primaryColor: 'orange' }}
+      theme={{
+        defaultGradient: { from: 'red', to: 'orange', deg: 45 },
+        primaryColor: 'orange',
+      }}
     >
       <AppHeader />
       <div className={classes.sideMarginProvider}>

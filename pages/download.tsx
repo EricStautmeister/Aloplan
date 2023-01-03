@@ -1,5 +1,5 @@
 import { createStyles, MantineProvider, Title } from '@mantine/core';
-// import { useState } from 'react';
+
 import { AppHeader /*, ProgressBar, GoalsTitle*/ } from '../components';
 
 const useStyles = createStyles((theme) => ({
@@ -28,11 +28,16 @@ export default function Download() {
   return (
     <MantineProvider
       inherit
-      theme={{ defaultGradient: { from: 'red', to: 'orange', deg: 45 }, primaryColor: 'orange' }}
+      theme={{
+        defaultGradient: { from: 'red', to: 'orange', deg: 45 },
+        primaryColor: 'orange',
+      }}
     >
       <AppHeader />
       <div className={classes.sideMarginProvider}>
-        <Title className={classes.title} align="center">Not Yet Implemented</Title>
+        <Title className={classes.title} align="center">
+          Not Yet Implemented
+        </Title>
       </div>
     </MantineProvider>
   );
