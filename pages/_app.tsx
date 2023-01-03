@@ -1,3 +1,4 @@
+import '../styles/global.css';
 import { useState } from 'react';
 import NextApp, { AppProps, AppContext } from 'next/app';
 import { getCookie, setCookie } from 'cookies-next';
@@ -18,7 +19,7 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
   return (
     <>
       <Head>
-        <title>Mantine next example</title>
+        <title>Goal Setter</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
         <link rel="shortcut icon" href="/favicon.svg" />
       </Head>
@@ -39,5 +40,6 @@ App.getInitialProps = async (appContext: AppContext) => {
   return {
     ...appProps,
     colorScheme: getCookie('mantine-color-scheme', appContext.ctx) || 'dark',
+    defaultGradient: { from: 'red', to: 'orange', deg: 20 },
   };
 };

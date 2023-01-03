@@ -8,17 +8,25 @@ export function ColorSchemeToggle() {
     <Group position="center" mt="xl">
       <ActionIcon
         onClick={() => toggleColorScheme()}
-        size="xl"
+        size="lg"
         sx={(theme) => ({
           backgroundColor:
             theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-          color: theme.colorScheme === 'dark' ? theme.colors.yellow[4] : theme.colors.blue[6],
+          color:
+            theme.colorScheme === 'dark'
+              ? theme.colors.yellow[4]
+              : theme.colors.orange[6],
+          marginTop: -22,
+          ...theme.fn.hover({
+            backgroundColor:
+              theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
+          }),
         })}
       >
         {colorScheme === 'dark' ? (
-          <IconSun size={20} stroke={1.5} />
+          <IconSun size={18} stroke={1.5} />
         ) : (
-          <IconMoonStars size={20} stroke={1.5} />
+          <IconMoonStars size={18} stroke={1.5} />
         )}
       </ActionIcon>
     </Group>
