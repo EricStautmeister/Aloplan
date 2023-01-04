@@ -12,7 +12,7 @@ const useStyles = createStyles((theme) => ({
       fontSize: 100,
     },
     [theme.fn.smallerThan('xs')]: {
-      fontSize: 60,
+      fontSize: 40,
     },
   },
   sideMarginProvider: {

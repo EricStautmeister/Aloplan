@@ -25,15 +25,15 @@ export function ProgressBar({
   };
   const theme = useMantineTheme();
   const [progress, setProgress]: [any, any] = useState([
-    { value: 15, color: getColor(theme, 0), label: 'Lifetime', tooltip: 'Lifetime Goals' },
+    { value: 22, color: getColor(theme, 0), label: 'Lifetime', tooltip: 'Lifetime Goals' },
   ]);
   const progressValues: any = [
-    { value: 15, color: getColor(theme, 0), label: 'Lifetime', tooltip: 'Lifetime Goals' },
-    { value: 15, color: getColor(theme, 1), label: 'Decade', tooltip: 'Goals for the Decade' },
-    { value: 15, color: getColor(theme, 2), label: 'Year', tooltip: 'Yearly Goals' },
+    { value: 22, color: getColor(theme, 0), label: 'Lifetime', tooltip: 'Lifetime Goals' },
+    { value: 20, color: getColor(theme, 1), label: 'Decade', tooltip: 'Goals for the Decade' },
+    { value: 13, color: getColor(theme, 2), label: 'Year', tooltip: 'Yearly Goals' },
     { value: 15, color: getColor(theme, 3), label: 'Month', tooltip: 'Monthly Goals' },
     { value: 15, color: getColor(theme, 4), label: 'Week', tooltip: 'Weekly Goals' },
-    { value: 26, color: getColor(theme, 5), label: 'Day', tooltip: 'Goals for every day' },
+    { value: 15, color: getColor(theme, 5), label: 'Day', tooltip: 'Goals for every day' },
   ];
   const updateProgress = (mode: number) => {
     if (mode === 0 && progress.length <= progressValues.length && progress.length > 1) {
