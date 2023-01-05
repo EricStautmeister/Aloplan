@@ -1,6 +1,5 @@
 import { createStyles, MantineProvider } from '@mantine/core';
-import { useState } from 'react';
-import { AppHeader, ProgressBar, GoalsTitle } from '../components';
+import { AppHeader, Navigation } from '../components';
 
 const useStyles = createStyles((theme) => ({
   sideMarginProvider: {
@@ -13,8 +12,6 @@ const useStyles = createStyles((theme) => ({
 }));
 export default function Goals() {
   const { classes } = useStyles();
-  const [currentGoalTimeframe, setGoalTimeframe] = useState('Lifetime');
-  const [allGoals, setAllGoals] = useState<any | any>([]);
   return (
     <MantineProvider
       inherit
@@ -25,13 +22,7 @@ export default function Goals() {
     >
       <AppHeader />
       <div className={classes.sideMarginProvider}>
-        <GoalsTitle currentGoalTimeframe={currentGoalTimeframe} />
-        <ProgressBar
-          allGoals={allGoals}
-          setAllGoals={setAllGoals}
-          currentGoalTimeframe={currentGoalTimeframe}
-          setGoalTimeframe={setGoalTimeframe}
-        />
+        <Navigation />
       </div>
     </MantineProvider>
   );

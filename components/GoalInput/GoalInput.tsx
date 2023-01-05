@@ -1,6 +1,4 @@
-import { useState } from 'react';
 import { Button, createStyles } from '@mantine/core';
-import { GoalInputElement } from './GoalInputElement';
 
 const useStyles = createStyles((theme) => ({
   button: {
@@ -33,35 +31,22 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface Props {
-  allGoals: any;
-  setAllGoals: any;
-  currentGoalTimeframe: string;
+  inputList: any;
+  addInput: any;
 }
 
-export function GoalInput({ allGoals, setAllGoals, currentGoalTimeframe }: Props) {
+export function GoalInput({
+  inputList,
+  addInput,
+}: Props) {
   const { classes } = useStyles();
-  const [goals, setGoals] = useState<any | any>(allGoals[currentGoalTimeframe] || []);
-  const updateGoals = (id: any, goalObject: any[], goal: string) => {
-    goals[id] = goal;
-    setGoals(goals);
-  };
-  const addRow = async () => {
-    // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < goals.length + 1; i++) {
-      setGoals([...goals, '']);
-    }
-    // eslint-disable-next-line no-param-reassign
-    allGoals[currentGoalTimeframe] = goals;
-    setAllGoals(allGoals);
-  };
+
   return (
     <div className={classes.wrapper}>
-      {goals.map((goal: any, index: number) => (
-        <GoalInputElement key={index} id={index} goals={goals} updateGoals={updateGoals} />
-      ))}
+      <>{inputList}</>
       <div className={classes.ButtonWrapper}>
-        <Button className={classes.button} variant="gradient" onClick={() => addRow()}>
-          {goals.length === 0 ? 'Start adding Goals' : 'Add Goal'}
+        <Button className={classes.button} variant="gradient" onClick={() => addInput()}>
+          {inputList.length === 0 ? 'Start adding Goals' : 'Add Goal'}
         </Button>
       </div>
     </div>

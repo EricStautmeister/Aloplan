@@ -21,17 +21,18 @@ const useStyles = createStyles((theme) => ({
 
 interface GoalInputElementProps {
   id: number;
-  goals: any[];
-  updateGoals: (id: any, goalObject: any[], goal: string) => void;
+  value: any;
+  updateGoals: (id: any, goal: any) => void;
 }
 
-export function GoalInputElement({ id, goals, updateGoals }: GoalInputElementProps) {
+export function GoalInputElement({ id, value, updateGoals }: GoalInputElementProps) {
   const { classes } = useStyles();
-  const [goal, onGoalChange] = useState('');
-  async function updateGoal(event: any) {
-    onGoalChange(event.target.value);
-    updateGoals(id, goals, event.target.value);
+  const [goal, onGoalChange] = useState(value);
+  async function updateGoal({ target }:any) {
+    onGoalChange(target.value);
+    updateGoals(id, target.value);
   }
+
   return (
     <input
       className={classes.input}
