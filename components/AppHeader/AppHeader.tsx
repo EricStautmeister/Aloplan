@@ -12,6 +12,7 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import Link from 'next/link';
 import Image from 'next/image';
+import { getAuth } from 'firebase/auth';
 import { ColorSchemeToggle } from '../ColorSchemeToggle/ColorSchemeToggle';
 
 const useStyles = createStyles((theme) => ({
@@ -101,10 +102,24 @@ export function LinkMenu() {
 }
 
 export function AuthGroup() {
+  const auth = getAuth();
+
+  const signOut = async () => {
+    await auth.signOut();
+    console.log('user logout');
+  };
+
   return (
     <>
-      <Button variant="default">Log in</Button>
-      <Button variant="gradient">Sign up</Button>
+      {auth.currentUser ? (
+        <Button variant="gradient" onClick={() => signOut()}>
+          Sign Out
+        </Button>
+      ) : (
+        <Link href="/auth">
+          <Button variant="gradient">Sign In</Button>
+        </Link>
+      )}
     </>
   );
 }

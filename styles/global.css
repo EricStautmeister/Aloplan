@@ -1,1 +1,6 @@
 @import url("../public/Montserrat/fonts/webfonts/Montserrat-Alt1.css");
+
+/* Path: styles\global.css */
+body { 
+    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}

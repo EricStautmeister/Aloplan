@@ -11,6 +11,10 @@ const useStyles = createStyles((theme) => ({
     },
     marginBottom: theme.spacing.xl * 2,
   },
+  subTitle: {
+    width: '100%',
+    letterSpacing: 0,
+  },
 }));
 
 export function GoalsTitle({ currentGoalTimeframe }: { currentGoalTimeframe: string }) {
@@ -18,7 +22,7 @@ export function GoalsTitle({ currentGoalTimeframe }: { currentGoalTimeframe: str
   return (
     <Title className={classes.title} align="center">
       Goals for my{' '}
-      <Text inherit variant="gradient" component="span">
+      <Text inherit className={classes.subTitle} variant="gradient" component="span">
         {currentGoalTimeframe}
       </Text>
     </Title>
