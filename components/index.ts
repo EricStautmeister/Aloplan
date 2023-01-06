@@ -5,3 +5,6 @@ export * from './Navigation/Navigation';
 // export * from './Progress/ProgressBar';
 export * from './Titles/GoalsTitle';
 export * from './Titles/MainTitle';
+export * from './AuthForm/AuthForm.jsx';
+export * from './Context/AuthContext';
+export * from './Provider/AuthProvider';
