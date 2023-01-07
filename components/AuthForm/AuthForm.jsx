@@ -14,6 +14,10 @@ import {
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { useRouter } from 'next/router';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser, setLoggedIn } from '../Reducers/reducerActions';
+import { auth } from '../../firebase';
 // import { AuthContext } from '../Context/AuthContext';
 
 const useStyles = createStyles((theme) => ({
@@ -30,8 +34,10 @@ const useStyles = createStyles((theme) => ({
 
 export function AuthForm() {
   const auth = getAuth();
-  //   const user = useContext(AuthContext);
-  const [user, setUser] = useState(null);
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const user = useSelector((state) => state.user);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const [loginMode, setLoginMode] = useState(1);
@@ -43,29 +49,47 @@ export function AuthForm() {
         auth,
         emailRef.current.value,
         passwordRef.current.value
-      ).then(async (userCredential) => {
-        // Signed in
-        const credentialUser = userCredential?.user;
-        setUser(credentialUser);
+      ).then((userCredential) => {
+        dispatch(
+          setUser({
+            email: userCredential.user.email,
+            phoneNumber: userCredential.user.phoneNumber,
+            displayName: userCredential.user.displayName,
+          })
+        );
+        dispatch(setLoggedIn());
+        router.push('/');
+      }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error(`${errorCode}: ${errorMessage}`);
       });
     } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.error(errorCode, errorMessage);
+      console.error(error);
     }
   };
 
   const signIn = async () => {
     try {
-      console.log('email', emailRef.current?.value);
-      signInWithEmailAndPassword(auth, emailRef.current?.value, passwordRef.current?.value).then(
-        async (userCredential) => {
-          // Signed in
-          const credentialUser = userCredential.user;
-          setUser(credentialUser);
-        }
-      );
-      console.log('user', user);
+      signInWithEmailAndPassword(
+        auth,
+        emailRef.current.value,
+        passwordRef.current.value
+      ).then((userCredential) => {
+        dispatch(
+          setUser({
+            email: userCredential.user.email,
+            phoneNumber: userCredential.user.phoneNumber,
+            displayName: userCredential.user.displayName,
+          })
+        );
+        dispatch(setLoggedIn());
+        router.push('/');
+      }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error(`${errorCode}: ${errorMessage}`);
+      });
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -79,7 +103,7 @@ export function AuthForm() {
   };
 
   useEffect(() => {
-    console.log(user);
+    console.log("User is logged", user);
   }, [user]);
 
   //TODO: Add remember me functionality

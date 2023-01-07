@@ -12,8 +12,11 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import Link from 'next/link';
 import Image from 'next/image';
-import { getAuth } from 'firebase/auth';
+import { useSelector, useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
+import { auth } from '../../firebase';
 import { ColorSchemeToggle } from '../ColorSchemeToggle/ColorSchemeToggle';
+import { setLoggedOut } from '../Reducers/reducerActions';
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -38,7 +41,6 @@ const useStyles = createStyles((theme) => ({
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
     }),
   },
-
   subLink: {
     width: '100%',
     padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
@@ -50,7 +52,6 @@ const useStyles = createStyles((theme) => ({
 
     '&:active': theme.activeStyles,
   },
-
   dropdownFooter: {
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
     margin: -theme.spacing.md,
@@ -61,13 +62,11 @@ const useStyles = createStyles((theme) => ({
       theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]
     }`,
   },
-
   hiddenMobile: {
     [theme.fn.smallerThan('sm')]: {
       display: 'none',
     },
   },
-
   hiddenDesktop: {
     [theme.fn.largerThan('sm')]: {
       display: 'none',
@@ -102,16 +101,19 @@ export function LinkMenu() {
 }
 
 export function AuthGroup() {
-  const auth = getAuth();
+  const isLoggedIn: Boolean = useSelector((state: any) => state.isLoggedIn);
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const signOut = async () => {
     await auth.signOut();
-    console.log('user logout');
+    dispatch(setLoggedOut());
+    router.push('/');
   };
 
   return (
     <>
-      {auth.currentUser ? (
+      {isLoggedIn ? (
         <Button variant="gradient" onClick={() => signOut()}>
           Sign Out
         </Button>
