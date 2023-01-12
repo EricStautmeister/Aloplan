@@ -1,9 +1,13 @@
 import { Button, createStyles, Progress } from '@mantine/core';
 import { IconArrowBadgeLeft, IconArrowBadgeRight } from '@tabler/icons';
 import { useEffect, useState } from 'react';
+// import { getFirestore, getDoc, doc, deleteDoc, setDoc } from 'firebase/firestore';
 import { GoalInput } from '../GoalInput/GoalInput';
 import { GoalInputElement } from '../GoalInput/GoalInputElement';
 import { GoalsTitle } from '../Titles/GoalsTitle';
+// import { db } from '../../firebase';
+// eslint-disable-next-line import/order
+// import { useSelector } from 'react-redux';
 
 const useStyles = createStyles((theme) => ({
   button: {
@@ -38,21 +42,21 @@ export const handleProgressData = () => {
   return progressValues;
 };
 
+interface labels {
+  (): 'Lifetime' | 'Decade' | 'Year' | 'Month' | 'Week' | 'Day';
+}
+
 export function Navigation() {
   const { classes } = useStyles();
+
   const progressValues = handleProgressData();
+  const [progress, setProgress] = useState<any>([progressValues[0]]);
+  const getTimeframe: labels = () => progress[progress.length - 1].label;
 
-  // Utility Info
-  const [progress, setProgress] = useState<any | any>([progressValues[0]]);
-
-  const getTimeframe = () => progress[progress.length - 1].label;
-
-  // Goal Info
-  const [allGoals, setAllGoals] = useState<any | any>({ [getTimeframe()]: {} });
-  const [goals, setGoals] = useState<any | any>(allGoals[getTimeframe()] || {});
-
-  // Display Info
-  const [inputList, setInputList] = useState<any | any>([]);
+  const [allGoals, setAllGoals] = useState<any>({ [getTimeframe()]: {} });
+  const [goals, setGoals] = useState<any>({ [getTimeframe()]: {} });
+  const [inputList, setInputList] = useState<any>([]);
+  // const user: any = useSelector((state: any) => state.user);
 
   const updateGoals = (id: any, goal: string) => {
     //FIXME: DOES WORK, but goals may not be needed
@@ -64,6 +68,7 @@ export function Navigation() {
     // eslint-disable-next-line no-param-reassign
     allGoals[getTimeframe()] = goals;
     setAllGoals(allGoals);
+    localStorage.setItem('goals', JSON.stringify(allGoals));
   };
 
   const returnGoalInputElement = (goal: any) => (
@@ -92,7 +97,7 @@ export function Navigation() {
     );
   };
 
-  const updateProgress = (mode: number) => {
+  const updateProgress = async (mode: number) => {
     if (mode === 0 && progress.length <= progressValues.length && progress.length > 1) {
       progress.pop();
       setProgress([...progress]);
@@ -106,7 +111,24 @@ export function Navigation() {
   };
 
   useEffect(() => {
+    const asyncWrapper = async () => {
+      const temp = JSON.parse(localStorage.getItem('goals') || '{}');
+      await setAllGoals(temp);
+      if (temp[getTimeframe()]) {
+        await setGoals(temp[getTimeframe()]);
+
+        setInputList(
+          Object.values(temp[getTimeframe()]).map((goal: any) => returnGoalInputElement(goal))
+        );
+      }
+      console.log('Page loaded', localStorage, temp, inputList);
+    };
+    asyncWrapper();
+  }, []);
+
+  useEffect(() => {
     if (allGoals[getTimeframe()] === undefined) allGoals[getTimeframe()] = {};
+    setAllGoals(allGoals);
     setGoals(allGoals[getTimeframe()]);
     buildInputList(getTimeframe());
   }, [progress]);
@@ -121,7 +143,7 @@ export function Navigation() {
           <p>Back</p>
         </Button>
         <Button className={classes.button} variant="gradient" onClick={() => updateProgress(1)}>
-          <p>Next</p>
+          <p>Save & Next</p>
           <IconArrowBadgeRight size={22} color="#FFF" />
         </Button>
       </div>

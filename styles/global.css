@@ -3,4 +3,11 @@
 /* Path: styles\global.css */
 body { 
     transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    overflow: hidden;
+}
+
+iframe {
+    width: 100vw;
+    height: 100vh;
+    border: none;
 }

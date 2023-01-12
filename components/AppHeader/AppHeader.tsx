@@ -85,6 +85,8 @@ const useStyles = createStyles((theme) => ({
 
 export function LinkMenu() {
   const { classes } = useStyles();
+  const isLoggedIn: Boolean = useSelector((state: any) => state.isLoggedIn);
+
   return (
     <>
       <Link href="/">
@@ -93,9 +95,15 @@ export function LinkMenu() {
       <Link href="/goals">
         <a className={classes.link}>Goals</a>
       </Link>
-      <Link href="/download">
-        <a className={classes.link}>Download</a>
-      </Link>
+      {isLoggedIn ? (
+        <Link href="/download">
+          <a className={classes.link}>Download</a>
+        </Link>
+      ) : (
+        <Link href="/auth">
+          <a className={classes.link}>Download</a>
+        </Link>
+      )}
     </>
   );
 }

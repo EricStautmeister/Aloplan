@@ -1,6 +1,5 @@
-import { createStyles, MantineProvider, Title } from '@mantine/core';
-
-import { AppHeader /*, ProgressBar, GoalsTitle*/ } from '../components';
+import { createStyles, Title } from '@mantine/core';
+import View from '../components/pdfview/pdfview';
 
 const useStyles = createStyles((theme) => ({
   title: {
@@ -16,29 +15,21 @@ const useStyles = createStyles((theme) => ({
     },
   },
   sideMarginProvider: {
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginTop: -50,
-    maxWidth: 1000,
-    padding: `0 ${theme.spacing.md}px`,
+    margin: '0 auto',
+    // padding: `0 ${theme.spacing.md}px`,
+  },
+  PDFviewer: {
+    width: '80vw',
+    height: '80vh',
   },
 }));
 export default function Download() {
   const { classes } = useStyles();
   return (
-    <MantineProvider
-      inherit
-      theme={{
-        defaultGradient: { from: 'red', to: 'orange', deg: 45 },
-        primaryColor: 'orange',
-      }}
-    >
-      <AppHeader />
-      <div className={classes.sideMarginProvider}>
-        <Title className={classes.title} align="center">
-          Not Yet Implemented
-        </Title>
-      </div>
-    </MantineProvider>
+    <div className={classes.sideMarginProvider}>
+      <Title className={classes.title} align="center">
+        <View />
+      </Title>
+    </div>
   );
 }

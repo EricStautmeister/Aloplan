@@ -11,13 +11,18 @@ import {
   Button,
   createStyles,
 } from '@mantine/core';
+
 import Link from 'next/link';
+
 import { useEffect, useRef, useState } from 'react';
+
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+
 import { useRouter } from 'next/router';
+
 import { useSelector, useDispatch } from 'react-redux';
+
 import { setUser, setLoggedIn } from '../Reducers/reducerActions';
-import { auth } from '../../firebase';
 // import { AuthContext } from '../Context/AuthContext';
 
 const useStyles = createStyles((theme) => ({
